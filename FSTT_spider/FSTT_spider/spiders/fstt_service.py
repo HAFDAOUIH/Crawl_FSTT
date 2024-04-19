@@ -16,11 +16,11 @@ class FsttServiceSpider(scrapy.Spider):
         Brief = ' '.join(Brief).strip()
         accordion_items = response.css('div.elementor-accordion-item')
         print('Service:',service)
-        print('Brief',Brief)
+        print('Brief:',Brief)
         for item in accordion_items:
             title = item.css('.elementor-accordion-title::text').get().strip()
             content = item.css('div.elementor-tab-content').xpath('string()').get()
-        print('Title:',title)
-        print('Content:',content)
+            print('Title:',title)
+            print('Content:',content)
 
 
