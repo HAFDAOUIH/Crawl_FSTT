@@ -6,4 +6,5 @@ class FormationInitialeSpider(scrapy.Spider):
     start_urls = ["https://fstt.ac.ma/Portail2023/formation-initiale/"]
 
     def parse(self, response):
-        response.css('div.elementor-text-editor').xpath('string()').get().strip()
+        Content = response.css('div.elementor-text-editor').xpath('string()').get().strip()
+        yield print(Content)
