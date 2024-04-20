@@ -26,8 +26,7 @@ class FaculteConseiletabSpider(scrapy.Spider):
         for row in table_rows:
             # Extracting name and responsibility
             name = row.css('.td-content::text').get()
-            responsibility = row.css('.td-content::text').getall()[
-                1]  # Assuming the second .td-content contains the responsibility
+            responsibility = row.css('.td-content::text').getall()[1]  # Assuming the second .td-content contains the responsibility
 
             yield {
                 'Membre: ': name.strip(),
