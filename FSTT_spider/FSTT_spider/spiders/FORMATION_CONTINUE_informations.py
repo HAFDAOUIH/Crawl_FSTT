@@ -20,6 +20,7 @@ class FormationContinueInformationsSpider(scrapy.Spider):
         Public_concerne = response.xpath('//label[@for="Public concerné"]/following-sibling::div[@class="contenu"]').xpath('string()').get().replace('\n', '').replace('\r', '').replace('\xa0', '').strip()
         debouche = response.xpath('//label[@for="Débouchés"]/following-sibling::div[@class="contenu"]').xpath('string()').extract()
 
+
         yield {
             print('Fomation: ',Formation),
             print('Filiere :', Filiere),
