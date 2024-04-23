@@ -29,11 +29,9 @@ class RechercheStructSpider(scrapy.Spider):
         directeur_div = response.css('div#elementor-tab-content-1671').xpath('string()').get().replace('\xa0', ' ')
         directeur_infos = directeur_div.xpath('.//p')
 
-        equipes_div = response.css('div#elementor-tab-content-1672')
-        equipes_recherche = equipes_div.xpath('.//strong')
+        equipes_recherche = response.css('div#elementor-tab-content-1672').xpath('.//strong')
 
-        axes_div = response.css('div#elementor-tab-content-1673')
-        axes_recherche = axes_div.xpath('.//strong')
+        axes_recherche = response.css('div#elementor-tab-content-1673').xpath('.//strong')
 
         projets_recherche_link = response.css('div#elementor-tab-content-1674 a::attr(href)').get()
 
