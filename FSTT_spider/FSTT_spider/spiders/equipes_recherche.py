@@ -30,24 +30,46 @@ class EquipesRechercheSpider(scrapy.Spider):
         # Extract nom Directeur du lab
         directeur_infos = response.css('div#elementor-tab-content-1671').xpath('string()').get()
 
-        # Extract les equipes de recherche
-        equipes_recherche = response.css('div#elementor-tab-content-1672').xpath('.//strong').xpath('string()').getall()
-
         # Extract axes de recherche
-        axes_recherche = response.css('div#elementor-tab-content-1673').xpath('.//strong').xpath('string()').getall()
-
+        if response.css('div#elementor-tab-content-1672 strong'):
+            axes_recherche = response.css('div#elementor-tab-content-1672').xpath('.//strong').xpath(
+                'string()').getall()
+        else:
+            axes_recherche = response.css('div#elementor-tab-content-1672 ul li::text').getall()
         # Extract projets de recherche
-        projets_recherche_link = response.css('div#elementor-tab-content-1674 a::attr(href)').getall()
+        projets_recherche_link = response.css('div#elementor-tab-content-1673 a::attr(href)').getall()
 
         # Extract these et habilitations soutenues
-        these_habil_soutenues_link = response.css('div#elementor-tab-content-1675 a::attr(href)').get()
+        these_habil_soutenues_link = response.css('div#elementor-tab-content-1674 a::attr(href)').getall()
+
+        prod_scientifique = response.css('div#elementor-tab-content-1675 a::attr(href)').getall()
+
+        rows = response.xpath('//table[@class="blueTable"]/tbody/tr[position() > 1]')
+
+        membres = []
+
+        for row in rows:
+            # Extract data from each row
+            nom = row.xpath('td[1]/text()').get()
+            prenom = row.xpath('td[2]/em/text()').get()
+            email = row.xpath('td[3]/text()').get()
+
+            # Create an item and populate its fields
+            membre = {
+                'nom': nom,
+                'prenom': prenom,
+                'email': email
+            }
+            membres.append(membre)
+
 
         yield {
             'Title': title,
             'Nom Laboratoire': laboratoire,
             'Infos sur Directeur': directeur_infos,
-            'Equipes de Recherche': equipes_recherche,
             'Axes de Recherche': axes_recherche,
             'Projets de Recherche': projets_recherche_link,
-            'Theses et Habilitations soutenues': these_habil_soutenues_link
+            'Theses et Habilitations soutenues': these_habil_soutenues_link,
+            'Production Scientifique': prod_scientifique,
+            'Membres': membres
         }
