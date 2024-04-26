@@ -6,7 +6,9 @@
 import scrapy
 
 
-class FsttSpiderItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class EspaceEntrep(scrapy.Item):
+    title = scrapy.Field()
+    qui_sommes_nous = scrapy.Field()
+    objectif = scrapy.Field()
+    Comment = scrapy.Field()
+    activite_service = scrapy.Field()
