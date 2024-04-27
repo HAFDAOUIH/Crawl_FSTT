@@ -9,6 +9,7 @@ class FormationContinueSpider(scrapy.Spider):
 
     def parse(self, response):
         item = FaculteFormationContinue()
+        item["url"] = response.url
         item["title"] = response.css('h3.ja-masshead-title::text').extract_first()
         content = response.css('div.item-page').xpath('string()').get().strip()
         # Remove HTML tags and unwanted characters using regex

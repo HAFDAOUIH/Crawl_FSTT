@@ -24,6 +24,7 @@ class FormationInitialeLstSpider(scrapy.Spider):
 
     def parse_content(self, response):
         item = FaculteFormationInitialInfo()
+        item["url"] = response.url
         item["title"] = response.meta['title']
         item["Formation"] = response.css('h2.elementor-heading-title::text').extract_first()
         item["Objectifs"]= response.css('div.eael-tabs-content div#objectifs--tab').xpath('string()').get().strip()

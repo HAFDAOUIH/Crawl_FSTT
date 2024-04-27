@@ -15,6 +15,7 @@ class FaculteConseiletabSpider(scrapy.Spider):
 
     def parse(self, response):
         item = FaculteConseilEtab()
+        item["url"] = response.url
         item["Title"] = response.css('h2.elementor-heading-title::text').extract_first()
         brief_elements = response.css('div.elementor-widget-container div.elementor-text-editor').xpath('string()').extract()
         item["Brief"] = ' '.join(brief_elements).strip().replace('\n', '').replace('\t', '').replace('\xA0', ' ')

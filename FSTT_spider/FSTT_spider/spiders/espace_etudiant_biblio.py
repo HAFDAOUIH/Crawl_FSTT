@@ -7,6 +7,7 @@ class EspaceEtudiantBiblioSpider(scrapy.Spider):
 
     def parse(self, response):
         item = EspaceEtuBiblio()
+        item["url"] = response.url
         item["title_biblio"] = response.css('h2.elementor-heading-title::text').extract_first()
         item["info_biblio"] = response.css('div.elementor-element-populated div.elementor-widget-container p').xpath('string()').extract()
         yield item

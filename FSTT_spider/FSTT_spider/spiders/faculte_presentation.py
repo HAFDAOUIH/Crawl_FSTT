@@ -7,6 +7,7 @@ class FacultePresentationSpider(scrapy.Spider):
 
     def parse(self, response):
         item = FacultePresentation()
+        item["url"] = response.url
         item["title"] = response.css('h2.elementor-heading-title::text').extract_first()
         content_elements = response.css('div.elementor-widget-container div.elementor-text-editor').xpath('string()').extract()
         item["content"] = ' '.join(content_elements).strip().replace('\n', '').replace('\t', '').replace('\xA0', ' ')

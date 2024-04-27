@@ -17,6 +17,7 @@ class RechercheStructSpider(scrapy.Spider):
 
     def parse_content(self, response):
         item = FaculteRechercheStruct()
+        item["url"] = response.url
         item["title"] = response.meta['title']
         # Extract name of Lab
         item["laboratoire"] = response.css('h2.elementor-heading-title::text').extract_first()

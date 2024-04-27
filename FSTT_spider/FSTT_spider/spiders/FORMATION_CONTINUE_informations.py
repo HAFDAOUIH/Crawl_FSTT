@@ -13,6 +13,7 @@ class FormationContinueInformationsSpider(scrapy.Spider):
             yield response.follow(link, callback=self.parse_content)
     def parse_content(self, response):
         item = FaculteFormationContinueInfo()
+        item["url"] = response.url
         item["Formation"] = response.css('h3.ja-masshead-title span::text').get()
         item["Filiere"] = response.css('div.SPDetailEntry h1::text').get()
         Responsable_raw = response.css('div.field_responsable').xpath('string()').get().strip()

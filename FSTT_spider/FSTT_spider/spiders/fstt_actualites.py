@@ -16,6 +16,7 @@ class FsttActualitesSpider(scrapy.Spider):
             yield response.follow(link, callback=self.parse)
     def parse_link(self, response):
         item = FaculteActualite()
+        item["url"] = response.url
         item["title"] = response.css('h2.elementor-heading-title::text').extract_first()
         item["content"] = response.css('div.elementor-element-faf7450 div.elementor-widget-container').xpath('string()').get().strip()
 

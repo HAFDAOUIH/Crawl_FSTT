@@ -24,6 +24,7 @@ class EquipesRechercheSpider(scrapy.Spider):
 
     def parse_content(self, response):
         item = EquipeRecherche()
+        item["url"] = response.url
         item["title"] = response.meta['title']
 
         # Extract name of Lab
@@ -34,8 +35,7 @@ class EquipesRechercheSpider(scrapy.Spider):
 
         # Extract axes de recherche
         if response.css('div#elementor-tab-content-1672 strong'):
-            item["axes_recherche"] = response.css('div#elementor-tab-content-1672').xpath('.//strong').xpath(
-                'string()').getall()
+            item["axes_recherche"] = response.css('div#elementor-tab-content-1672').xpath('.//strong').xpath('string()').getall()
         else:
             item["axes_recherche"] = response.css('div#elementor-tab-content-1672 ul li::text').getall()
         # Extract projets de recherche
@@ -53,7 +53,7 @@ class EquipesRechercheSpider(scrapy.Spider):
         for row in rows:
             # Extract data from each row
             nom = row.xpath('td[1]/text()').get()
-            prenom = row.xpath('td[2]/em/text()').get()
+            prenom = row.xpath('td[2]/text()').get()
             email = row.xpath('td[3]/text()').get()
 
             # Create an item and populate its fields
@@ -62,7 +62,8 @@ class EquipesRechercheSpider(scrapy.Spider):
                 'prenom': prenom,
                 'email': email
             }
-            item["membres"].append(membre)
+            membres.append(membre)
+        item["membres"] = membres
 
 
         yield item

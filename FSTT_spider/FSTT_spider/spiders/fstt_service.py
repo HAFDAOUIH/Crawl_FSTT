@@ -12,13 +12,14 @@ class FsttServiceSpider(scrapy.Spider):
             yield response.follow(link, callback=self.pars_link)
     def pars_link(self, response):
         item = FaculteService()
+        item["url"] = response.url
         item["service"] = response.css('h2.elementor-heading-title::text').extract_first()
         Brief = response.css('div.elementor-text-editor ::text').extract()
         item["Brief"] = ' '.join(Brief).strip()
         accordion_items = response.css('div.elementor-accordion-item')
-        for item in accordion_items:
-            item["title"] = item.css('.elementor-accordion-title::text').get().strip()
-            item["content"] = item.css('div.elementor-tab-content').xpath('string()').get()
+        for items in accordion_items:
+            item["title"] = items.css('.elementor-accordion-title::text').get().strip()
+            item["content"] = items.css('div.elementor-tab-content').xpath('string()').get()
 
         yield item
 

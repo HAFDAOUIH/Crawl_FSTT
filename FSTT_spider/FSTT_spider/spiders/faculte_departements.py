@@ -9,6 +9,7 @@ class FaculteDepartementsSpider(scrapy.Spider):
 
     def parse(self, response):
         item = FaculteDepartement()
+        item["url"] = response.url
         cta_contents = response.css('div.elementor-cta__content')
 
         for cta_content in cta_contents:

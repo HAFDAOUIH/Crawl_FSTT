@@ -6,6 +6,7 @@
 import scrapy
 
 class EquipeRecherche(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     laboratoire = scrapy.Field()
     directeur_infos = scrapy.Field()
@@ -15,24 +16,29 @@ class EquipeRecherche(scrapy.Item):
     prod_scientifique = scrapy.Field()
     membres = scrapy.Field()
 class EspaceEntrep(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     qui_sommes_nous = scrapy.Field()
     objectif = scrapy.Field()
     Comment = scrapy.Field()
     activite_service = scrapy.Field()
 class EspaceEtuBiblio(scrapy.Item):
+    url = scrapy.Field()
     title_biblio = scrapy.Field()
     info_biblio = scrapy.Field()
 class EspaceEtuClub(scrapy.Item):
+    url = scrapy.Field()
     title_club = scrapy.Field()
     info_club = scrapy.Field()
 class FaculteConseilEtab(scrapy.Item):
+    url = scrapy.Field()
     Title = scrapy.Field()
     Brief = scrapy.Field()
     Name = scrapy.Field()
     Responsabilite = scrapy.Field()
 ####################################
 class FaculteContact(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     localisation = scrapy.Field()
     numero_telephone = scrapy.Field()
@@ -40,23 +46,28 @@ class FaculteContact(scrapy.Item):
     email = scrapy.Field()
 
 class FaculteDepartement(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     chef = scrapy.Field()
     email = scrapy.Field()
 
 class FaculteMotDoyen(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     content = scrapy.Field()
 
 class FacultePresentation(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     content = scrapy.Field()
 
 class FaculteFormationContinue(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     cleaned_content = scrapy.Field()
 
 class FaculteFormationContinueInfo(scrapy.Item):
+    url = scrapy.Field()
     Formation = scrapy.Field()
     Filiere = scrapy.Field()
     Responsable = scrapy.Field()
@@ -65,10 +76,12 @@ class FaculteFormationContinueInfo(scrapy.Item):
     debouche = scrapy.Field()
 
 class FaculteFormationInitial(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     Content = scrapy.Field()
 
 class FaculteFormationInitialInfo(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     Formation = scrapy.Field()
     Objectifs = scrapy.Field()
@@ -77,20 +90,24 @@ class FaculteFormationInitialInfo(scrapy.Item):
     coordinator_email = scrapy.Field()
 
 class FaculteActualite(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     content = scrapy.Field()
 
 class FaculteService(scrapy.Item):
+    url = scrapy.Field()
     service = scrapy.Field()
     Brief = scrapy.Field()
     title = scrapy.Field()
     content = scrapy.Field()
 
 class FaculteSpider(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     Content = scrapy.Field()
 
 class FaculteRechercheStruct(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
     laboratoire = scrapy.Field()
     directeur_infos = scrapy.Field()

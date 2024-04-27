@@ -8,6 +8,7 @@ class FaculteContactSpider(scrapy.Spider):
 
     def parse(self, response):
         item = FaculteContact()
+        item["url"] = response.url
         item["title"] = response.css('h2.elementor-heading-title::text').extract_first()
         # Extracting the items
         items_elements = response.css('div[data-id="d03fd3c"]').xpath('string()').extract()

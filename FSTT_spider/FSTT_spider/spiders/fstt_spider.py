@@ -13,6 +13,7 @@ class FSTTSpider(scrapy.Spider):
 
     def parse_link(self, response):
         item = FaculteSpider()
+        item["url"] = response.url
         item["title"] = response.css('h2.elementor-heading-title::text').extract_first()
         Content = response.css('div.elementor-element-faf7450 div.elementor-widget-container ::text').extract()
         item["Content"] = ' '.join(Content).strip()
