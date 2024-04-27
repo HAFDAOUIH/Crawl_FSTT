@@ -1,4 +1,5 @@
 import scrapy
+from ..items import FaculteConseilEtab
 
 
 class FaculteConseiletabSpider(scrapy.Spider):
@@ -13,22 +14,15 @@ class FaculteConseiletabSpider(scrapy.Spider):
                   ]
 
     def parse(self, response):
-        title = response.css('h2.elementor-heading-title::text').extract_first()
+        item = FaculteConseilEtab()
+        item["Title"] = response.css('h2.elementor-heading-title::text').extract_first()
         brief_elements = response.css('div.elementor-widget-container div.elementor-text-editor').xpath('string()').extract()
-        brief = ' '.join(brief_elements).strip().replace('\n', '').replace('\t', '').replace('\xA0', ' ')
+        item["Brief"] = ' '.join(brief_elements).strip().replace('\n', '').replace('\t', '').replace('\xA0', ' ')
 
         table_rows = response.css('.eael-data-table tbody tr')
-        yield {
-            'title:': title,
-            'brief:': brief,
-
-        }
         for row in table_rows:
             # Extracting name and responsibility
-            name = row.css('.td-content::text').get()
-            responsibility = row.css('.td-content::text').getall()[1]  # Assuming the second .td-content contains the responsibility
+            item["Name"] = row.css('.td-content::text').get()
+            item["Responsabilite"] = row.css('.td-content::text').getall()[1]  # Assuming the second .td-content contains the responsibility
 
-            yield {
-                'Membre: ': name.strip(),
-                'Responsabilité:': responsibility.strip()
-            }
+            yield item

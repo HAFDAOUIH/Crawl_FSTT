@@ -1,5 +1,5 @@
 import scrapy
-
+from ..items import EspaceEtuClub
 
 class EspaceEtudiantClubsSpider(scrapy.Spider):
     name = 'espace-etudiant-clubs'
@@ -10,12 +10,9 @@ class EspaceEtudiantClubsSpider(scrapy.Spider):
         for link in links:
             yield response.follow(link, callback=self.parse_content)
     def parse_content(self, response):
-        title_club = response.css('h2.elementor-heading-title::text').extract_first()
-        info_club = response.css('div.elementor-element-populated div.elementor-widget-container p').xpath('string()').extract()
-        yield {
-            'Club :': title_club,
-            'Les informations de Club': info_club
-        }
-        print(title_club, info_club,"################################################\n")
+        item = EspaceEtuClub()
+        item["title_club"] = response.css('h2.elementor-heading-title::text').extract_first()
+        item["info_club"] = response.css('div.elementor-element-populated div.elementor-widget-container p').xpath('string()').extract()
+        yield item
 
 
