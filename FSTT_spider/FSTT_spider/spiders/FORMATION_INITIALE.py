@@ -1,4 +1,5 @@
 import scrapy
+from ..items import FaculteFormationInitial
 
 
 class FormationInitialeSpider(scrapy.Spider):
@@ -6,9 +7,7 @@ class FormationInitialeSpider(scrapy.Spider):
     start_urls = ["https://fstt.ac.ma/Portail2023/formation-initiale/"]
 
     def parse(self, response):
-        title = response.css('div.elementor-widget-container h2.elementor-heading-title').xpath('string()').extract_first()
-        Content = response.css('div.elementor-text-editor').xpath('string()').get().strip()
-        yield {
-            print('Title: ', title),
-            print('Content: ', Content)
-        }
+        item = FaculteFormationInitial()
+        item["title"] = response.css('div.elementor-widget-container h2.elementor-heading-title').xpath('string()').extract_first()
+        item["Content"] = response.css('div.elementor-text-editor').xpath('string()').get().strip()
+        yield item

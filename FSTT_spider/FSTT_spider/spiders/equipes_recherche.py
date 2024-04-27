@@ -1,4 +1,5 @@
 import scrapy
+from ..items import EquipeRecherche
 
 
 class EquipesRechercheSpider(scrapy.Spider):
@@ -22,27 +23,28 @@ class EquipesRechercheSpider(scrapy.Spider):
 
 
     def parse_content(self, response):
-        title = response.meta['title']
+        item = EquipeRecherche()
+        item["title"] = response.meta['title']
 
         # Extract name of Lab
-        laboratoire = response.css('h2.elementor-heading-title::text').extract_first()
+        item["laboratoire"] = response.css('h2.elementor-heading-title::text').extract_first()
 
         # Extract nom Directeur du lab
-        directeur_infos = response.css('div#elementor-tab-content-1671').xpath('string()').get()
+        item["directeur_infos"] = response.css('div#elementor-tab-content-1671').xpath('string()').get()
 
         # Extract axes de recherche
         if response.css('div#elementor-tab-content-1672 strong'):
-            axes_recherche = response.css('div#elementor-tab-content-1672').xpath('.//strong').xpath(
+            item["axes_recherche"] = response.css('div#elementor-tab-content-1672').xpath('.//strong').xpath(
                 'string()').getall()
         else:
-            axes_recherche = response.css('div#elementor-tab-content-1672 ul li::text').getall()
+            item["axes_recherche"] = response.css('div#elementor-tab-content-1672 ul li::text').getall()
         # Extract projets de recherche
-        projets_recherche_link = response.css('div#elementor-tab-content-1673 a::attr(href)').getall()
+        item["projets_recherche_link"] = response.css('div#elementor-tab-content-1673 a::attr(href)').getall()
 
         # Extract these et habilitations soutenues
-        these_habil_soutenues_link = response.css('div#elementor-tab-content-1674 a::attr(href)').getall()
+        item["these_habil_soutenues_link"] = response.css('div#elementor-tab-content-1674 a::attr(href)').getall()
 
-        prod_scientifique = response.css('div#elementor-tab-content-1675 a::attr(href)').getall()
+        item["prod_scientifique"] = response.css('div#elementor-tab-content-1675 a::attr(href)').getall()
 
         rows = response.xpath('//table[@class="blueTable"]/tbody/tr[position() > 1]')
 
@@ -60,16 +62,7 @@ class EquipesRechercheSpider(scrapy.Spider):
                 'prenom': prenom,
                 'email': email
             }
-            membres.append(membre)
+            item["membres"].append(membre)
 
 
-        yield {
-            'Title': title,
-            'Nom Laboratoire': laboratoire,
-            'Infos sur Directeur': directeur_infos,
-            'Axes de Recherche': axes_recherche,
-            'Projets de Recherche': projets_recherche_link,
-            'Theses et Habilitations soutenues': these_habil_soutenues_link,
-            'Production Scientifique': prod_scientifique,
-            'Membres': membres
-        }
+        yield item

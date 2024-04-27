@@ -1,4 +1,5 @@
 import scrapy
+from ..items import FaculteActualite
 
 
 class FsttActualitesSpider(scrapy.Spider):
@@ -14,7 +15,8 @@ class FsttActualitesSpider(scrapy.Spider):
         for link in next_page_link:
             yield response.follow(link, callback=self.parse)
     def parse_link(self, response):
-        title = response.css('h2.elementor-heading-title::text').extract_first()
-        content = response.css('div.elementor-element-faf7450 div.elementor-widget-container').xpath('string()').get().strip()
-        print('Title ::',title)
-        print('Content :',content)
+        item = FaculteActualite()
+        item["title"] = response.css('h2.elementor-heading-title::text').extract_first()
+        item["content"] = response.css('div.elementor-element-faf7450 div.elementor-widget-container').xpath('string()').get().strip()
+
+        yield item

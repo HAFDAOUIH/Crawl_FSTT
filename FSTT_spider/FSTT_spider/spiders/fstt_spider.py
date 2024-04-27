@@ -1,4 +1,5 @@
 import scrapy
+from ..items import FaculteSpider
 
 class FSTTSpider(scrapy.Spider):
     name = 'fstt_spider'
@@ -11,9 +12,10 @@ class FSTTSpider(scrapy.Spider):
 
 
     def parse_link(self, response):
-        title = response.css('h2.elementor-heading-title::text').extract_first()
+        item = FaculteSpider()
+        item["title"] = response.css('h2.elementor-heading-title::text').extract_first()
         Content = response.css('div.elementor-element-faf7450 div.elementor-widget-container ::text').extract()
-        Content = ' '.join(Content).strip()
-        print("Title:", title)
-        print('Content:', Content)
+        item["Content"] = ' '.join(Content).strip()
+
+        yield item
 
